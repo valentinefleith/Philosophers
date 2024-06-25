@@ -84,8 +84,13 @@ Threads model is a type of shared memory programming. Threads communicate with e
 
 The programmer is responsible for determining the parallelism. 2 implementations of threads : *POSIX Threads* and *OpenMP*. (for this project, we use POSIX Threads, also referred as Pthreads).
 
+3 essential facilities : _Execution context_, _Scheduling_, and _Synchronization_. Few examples :
+
+![image](https://github.com/valentinefleith/Philosophers/assets/125041345/181ee8f0-04df-4403-b436-ef32f2196d60)
+
 
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
 - [Parallel Computing](https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial)
 - [POSIX Threads](https://hpc-tutorials.llnl.gov/posix/)
+- [Programming with POSIX Threads](https://books.google.fr/books?id=_xvnuFzo7q0C&printsec=frontcover&redir_esc=y#v=onepage&q&f=false)
