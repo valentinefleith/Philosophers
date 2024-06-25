@@ -6,7 +6,7 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/06/25 22:19:29 by vafleith         ###   ########.fr        #
+#    Updated: 2024/06/25 22:59:02 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = -Iinclude
 
 SRC_DIR = src
 
-SRCS = main.c print.c error_messages.c
+SRCS = main.c print.c error_messages.c parse.c parse_utils.c
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
 OBJ_DIR = build

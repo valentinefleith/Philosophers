@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/06/25 22:20:53 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/06/25 22:58:51 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@
 # include <sys/time.h>
 # include <unistd.h>
 
-// typedef struct s_rules
-//{
-//
-//}
+typedef struct s_rules
+{
+	int nb_of_philo;
+	int time_to_die;
+	int time_to_eat;
+	int time_to_sleep;
+	int nb_of_time_each_philo_must_eat;
+} t_rules;
 
 typedef struct s_philosopher
 {
@@ -30,6 +34,11 @@ typedef struct s_philosopher
 	pthread_t	thread_id;
 
 }				t_philosopher;
+
+t_rules parse_rules(int argc, char **argv);
+int	ft_isdigit(int c);
+char	*ft_strchr(const char *s, int c);
+int	ft_atoi(const char *str);
 
 // PRINT UTILS
 void			ft_putchar_fd(char c, int fd);

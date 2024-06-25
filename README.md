@@ -76,7 +76,7 @@ Advantage is increased scalability, disadvantage is increased programmer complex
 
 
 ## Threads
-A thread of execution is the smallest sequence of programmed instructions that can be managed independently by a scheduler. There is always at least 1 thread for a process. Also each thread has its private data.
+A thread of execution is the smallest sequence of programmed instructions that can be managed independently by a scheduler (a basic unit of CPU utilization). There is always at least 1 thread for a process. Also each thread has its private data.
 
 Threads model is a type of shared memory programming. Threads communicate with each other through global memory (updating address locations).
 
@@ -88,6 +88,13 @@ The programmer is responsible for determining the parallelism. 2 implementations
 
 ![image](https://github.com/valentinefleith/Philosophers/assets/125041345/181ee8f0-04df-4403-b436-ef32f2196d60)
 
+A thread comprises:
+- A thread ID
+- A program counter
+- A register set
+- A stack
+
+It shares with other threads belonging to the same process its code section, data section, and other OS resources such as open files and signals.
 
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
