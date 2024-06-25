@@ -12,21 +12,21 @@
 
 #include "philo.h"
 
-static int is_valid(char *arg)
+static int	is_valid(char *arg)
 {
-	while(*arg)
+	while (*arg)
 	{
 		if (!ft_isdigit(*arg))
-			return 0;
+			return (0);
 		arg++;
 	}
-	return 1;
+	return (1);
 }
 
-t_rules parse_rules(int argc, char **argv)
+t_rules	parse_rules(int argc, char **argv)
 {
-	t_rules rules;
-	int i;
+	t_rules	rules;
+	int		i;
 
 	i = 1;
 	while (argv[i])
@@ -41,7 +41,7 @@ t_rules parse_rules(int argc, char **argv)
 	rules.time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		rules.nb_of_time_each_philo_must_eat = ft_atoi(argv[5]);
-	else 
+	else
 		rules.nb_of_time_each_philo_must_eat = -1;
-	return rules;
+	return (rules);
 }

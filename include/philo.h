@@ -21,12 +21,12 @@
 
 typedef struct s_rules
 {
-	int nb_of_philo;
-	int time_to_die;
-	int time_to_eat;
-	int time_to_sleep;
-	int nb_of_time_each_philo_must_eat;
-} t_rules;
+	int			nb_of_philo;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			nb_of_time_each_philo_must_eat;
+}				t_rules;
 
 typedef struct s_philosopher
 {
@@ -35,10 +35,10 @@ typedef struct s_philosopher
 
 }				t_philosopher;
 
-t_rules parse_rules(int argc, char **argv);
-int	ft_isdigit(int c);
-char	*ft_strchr(const char *s, int c);
-int	ft_atoi(const char *str);
+t_rules			parse_rules(int argc, char **argv);
+int				ft_isdigit(int c);
+char			*ft_strchr(const char *s, int c);
+int				ft_atoi(const char *str);
 
 // PRINT UTILS
 void			ft_putchar_fd(char c, int fd);

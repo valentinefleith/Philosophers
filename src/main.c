@@ -14,7 +14,8 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_rules rules;
+	t_rules	rules;
+
 	if (argc < 5 || argc > 6)
 		argument_error();
 	rules = parse_rules(argc, argv);
