@@ -27,6 +27,23 @@ a philosopher dies of starvation.
 
 • Philosophers should avoid dying!
 
+
+![image](https://github.com/user-attachments/assets/97e7754c-79a5-4b5a-a63d-d8792568aa29)
+
+
+## The problem
+We could consider a proposal in which each philosopher is instructed to behave as follows:
+
+- think until the left fork is available; when it is, pick it up;
+- think until the right fork is available; when it is, pick it up;
+- when both forks are held, eat for a fixed amount of time;
+- then, put the right fork down;
+- then, put the left fork down;
+- repeat from the beginning.
+
+But this can't work. If every philosopher simultaneously picked the left fork, they all wait for the right fork indefinitely (a deadlock). It mimics scenarios where processes indefinitely wait for resources, leading to system freezes. The aim of the project is not just preventing deadlock but also ensuring fair access to resources and preventing starvation (i.e. when a process never gets the resource it needs).
+
+
 ## Parallel Computing
 
 Traditionally, software has been written for **serial** computation (meaning discrete series of instructions, executed on a single processor and sequentially). However, in **parallel computing**, parts of the problem can be executed concurrently and simultaneously on different processors.
@@ -96,8 +113,13 @@ A thread comprises:
 
 It shares with other threads belonging to the same process its code section, data section, and other OS resources such as open files and signals.
 
+
+
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
 - [Parallel Computing](https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial)
 - [POSIX Threads](https://hpc-tutorials.llnl.gov/posix/)
 - [Programming with POSIX Threads](https://books.google.fr/books?id=_xvnuFzo7q0C&printsec=frontcover&redir_esc=y#v=onepage&q&f=false)
+- [Mix of resources](https://suspectedoceano.notion.site/Philosophers-b1bf3c57eee6420cafa7d0900b3d3216)
+- [Dining Philospher Problem solutions](https://eng.libretexts.org/Courses/Delta_College/Operating_System:_The_Basics/06:_Deadlock/6.4:_Dining_Philosopher_Problem#:~:text=Arbitrator%20solution,computers%20competing%20for%20access)
+- [Article on Philosophers project](https://medium.com/@ridwaneelfilali/philosophers-the-dinning-problem-8ea3c0fc8cc7)
