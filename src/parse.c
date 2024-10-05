@@ -6,21 +6,21 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/06/25 22:58:14 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/05 09:52:45 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	is_valid(char *arg)
+static bool	is_valid(char *arg)
 {
 	while (*arg)
 	{
 		if (!ft_isdigit(*arg))
-			return (0);
+			return (false);
 		arg++;
 	}
-	return (1);
+	return (true);
 }
 
 t_rules	parse_rules(int argc, char **argv)
