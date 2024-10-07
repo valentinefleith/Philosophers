@@ -113,7 +113,104 @@ A thread comprises:
 
 It shares with other threads belonging to the same process its code section, data section, and other OS resources such as open files and signals.
 
+## Allowed functions
 
+### `pthread_create`
+
+**Declaration** :
+
+```int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg);```
+
+### `pthread_join`
+
+**Declaration**:
+
+```int pthread_join(pthread_t thread, void **value_ptr);```
+This function is useful for synchronization and cleanup. 
+
+When we call `pthread_join(tid, &result)`, the calling thread will be blocked until the thread with ID `tid` completes its execution. It ensures that the main thread (or any other) can wait for another thread to finish its work.
+
+Also it has a clean role. When a thread completes its execution, the system keeps some metadata about that thread. The function allows us to reclaim that memory (avoiding leaks). 
+
+If a thread is not joined or detached (`pthread_detach`, these resources can linger leading to leaks. 
+
+Example of manipulating `pthread_join`:
+```c
+#include <pthread.h>
+#include <unistd.h>
+#include <stdio.h>
+
+void* thread_func(void* arg) 
+{
+    printf("Hello from the thread!\n");
+    return NULL;
+}
+
+int main() 
+{
+    pthread_t thread_id;
+
+    // Create a new thread
+    if (pthread_create(&thread_id, NULL, thread_func, NULL) != 0) 
+    {
+        perror("Failed to create thread");
+        return 1;
+    }
+
+    // Give the thread some time to execute.
+    sleep(2);
+
+    // 🚨🚨 Uncomment the following line to reclaim resources of the thread, 
+    // preventing the leak.🚨🚨
+    pthread_join(thread_id, NULL);
+
+    printf("Exiting main function.\n");
+    return 0;
+}
+```
+### `pthread_detach`
+
+**Declaration** :
+
+```int pthread_detach(pthread_t thread);```
+
+The aim of this function is to tell the system to free any resoucres a thread used once it finished its job. In other words we set a thread to *auto-clean* mode. 
+
+Example:
+```c
+#include <pthread.h>
+#include <stdio.h>
+#include <unistd.h> // for sleep
+
+// This function will be executed by the detached thread
+void* print_in_background(void* arg)
+{
+    printf("This is printed from the thread.\n");
+    sleep(5);
+    return NULL;
+}
+
+int main() {
+    pthread_t thread_id;
+
+    // Create a new thread
+    if (pthread_create(&thread_id, NULL, print_in_background, NULL) != 0)
+    {
+        perror("Failed to create thread");
+        return 1;
+    }
+
+    // 🚨 toggle these 2 🚨
+    pthread_detach(thread_id);
+//    pthread_join(thread_id, NULL);
+
+    // Continue with the main thread's work
+    printf("This is printed from the main thread.\n");
+    usleep(100000);
+
+    return 0;
+}
+```
 
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
@@ -123,3 +220,4 @@ It shares with other threads belonging to the same process its code section, dat
 - [Mix of resources](https://suspectedoceano.notion.site/Philosophers-b1bf3c57eee6420cafa7d0900b3d3216)
 - [Dining Philospher Problem solutions](https://eng.libretexts.org/Courses/Delta_College/Operating_System:_The_Basics/06:_Deadlock/6.4:_Dining_Philosopher_Problem#:~:text=Arbitrator%20solution,computers%20competing%20for%20access)
 - [Article on Philosophers project](https://medium.com/@ridwaneelfilali/philosophers-the-dinning-problem-8ea3c0fc8cc7)
+- [Philosopher visualizer](https://nafuka11.github.io/philosophers-visualizer/)
