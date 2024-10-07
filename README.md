@@ -212,6 +212,21 @@ int main() {
 }
 ```
 
+## Data races
+
+Data races occur when multiple tasks or threads access a shared resource without sufficient protections, leading to undefined or unpredictable behavior.
+
+![image](https://github.com/user-attachments/assets/eecc41bc-0eae-4b5b-bdb2-2157a0bee370)
+
+It can appear when :
+- two or more threads concurrently accessing a location of memory
+- one of them is a write
+- one of them is unsynchronized
+
+## Mutexes (Mutual Exclusion Locks)
+
+It's like a locks which protects a variable in a block of code. It can only be executing ater unlocking the lock.
+
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
 - [Parallel Computing](https://hpc.llnl.gov/documentation/tutorials/introduction-parallel-computing-tutorial)
