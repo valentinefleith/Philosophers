@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/05 09:53:01 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:00:27 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define PHILO_H
 
 # include <pthread.h>
+# include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-# include <stdbool.h>
+
+# define STR_U32_MAX "2147483647"
 
 typedef struct s_rules
 {
@@ -46,5 +48,9 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 void			argument_error(void);
+
+// GENERAL UTILS
+int				ft_strncmp(const char *s1, const char *s2, size_t n);
+size_t			ft_strlen(const char *str);
 
 #endif

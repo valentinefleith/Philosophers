@@ -6,13 +6,13 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/05 09:52:45 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:12:28 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	is_valid(char *arg)
+static bool	is_only_digits(char *arg)
 {
 	while (*arg)
 	{
@@ -23,6 +23,18 @@ static bool	is_valid(char *arg)
 	return (true);
 }
 
+static bool	is_overflowing(char *arg)
+{
+	size_t	len_arg;
+
+	len_arg = ft_strlen(arg);
+	if (len_arg < ft_strlen(STR_U32_MAX))
+		return (false);
+	if (len_arg > ft_strlen(STR_U32_MAX))
+		return (true);
+	return (ft_strncmp(arg, STR_U32_MAX, ft_strlen(STR_U32_MAX)) > 0);
+}
+
 t_rules	parse_rules(int argc, char **argv)
 {
 	t_rules	rules;
@@ -31,7 +43,7 @@ t_rules	parse_rules(int argc, char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		if (!is_valid(argv[i]))
+		if (!is_only_digits(argv[i]) || is_overflowing(argv[i]))
 			argument_error();
 		i++;
 	}

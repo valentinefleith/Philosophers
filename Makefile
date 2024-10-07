@@ -6,21 +6,21 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/06/25 22:59:02 by vafleith         ###   ########.fr        #
+#    Updated: 2024/10/07 12:01:57 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -g3
 # CFLAGS += -Werror
 
 INC = -Iinclude
 
 SRC_DIR = src
 
-SRCS = main.c print.c error_messages.c parse.c parse_utils.c
+SRCS = main.c print.c error_messages.c parse.c parse_utils.c general_utils.c
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
 OBJ_DIR = build
