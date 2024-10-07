@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/07 12:23:38 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:27:28 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@ static bool	is_overflowing(char *arg)
 	return (ft_strncmp(arg, STR_U32_MAX, ft_strlen(STR_U32_MAX)) > 0);
 }
 
+static bool	respect_range(t_rules *rules)
+{
+	return (rules->nb_of_philo >= 1 && rules->nb_of_philo <= 200
+		&& rules->time_to_die > 0 && rules->time_to_eat > 0
+		&& rules->time_to_sleep > 0);
+}
+
 t_rules	parse_rules(int argc, char **argv)
 {
 	t_rules	rules;
@@ -55,5 +62,7 @@ t_rules	parse_rules(int argc, char **argv)
 		rules.nb_of_time_each_philo_must_eat = ft_atoi(argv[5]);
 	else
 		rules.nb_of_time_each_philo_must_eat = -1;
+	if (!respect_range(&rules))
+		argument_error();
 	return (rules);
 }

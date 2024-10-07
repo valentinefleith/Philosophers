@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/07 12:23:08 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/07 14:08:29 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,18 @@ typedef struct s_rules
 	int			nb_of_time_each_philo_must_eat;
 }				t_rules;
 
+typedef struct s_state
+{
+	bool		is_eating;
+	bool		is_dead;
+	int			meals_eaten;
+}				t_state;
+
 typedef struct s_philosopher
 {
 	int			id;
 	pthread_t	thread_id;
-
+	t_state		state;
 }				t_philosopher;
 
 t_rules			parse_rules(int argc, char **argv);
