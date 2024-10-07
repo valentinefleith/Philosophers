@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/07 12:12:28 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/07 12:23:38 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ t_rules	parse_rules(int argc, char **argv)
 			argument_error();
 		i++;
 	}
-	rules.nb_of_philo = ft_atoi(argv[1]);
-	rules.time_to_die = ft_atoi(argv[2]);
-	rules.time_to_eat = ft_atoi(argv[3]);
-	rules.time_to_sleep = ft_atoi(argv[4]);
+	rules.nb_of_philo = ft_atoi(argv[NB_OF_PHILO_IDX]);
+	rules.time_to_die = ft_atoi(argv[TIME_DIE_IDX]);
+	rules.time_to_eat = ft_atoi(argv[TIME_EAT_IDX]);
+	rules.time_to_sleep = ft_atoi(argv[TIME_SLEEP_IDX]);
 	if (argc == 6)
 		rules.nb_of_time_each_philo_must_eat = ft_atoi(argv[5]);
 	else
