@@ -225,7 +225,7 @@ It can appear when :
 
 ## Mutexes (Mutual Exclusion Locks)
 
-It's like a locks which protects a variable in a block of code. It can only be executing ater unlocking the lock.
+It's like a lock which protects a variable in a block of code. It can only be executed after unlocking the lock.
 
 ## Ressources
 - [Threads (Wikipedia)](https://en.wikipedia.org/wiki/Thread_(computing))
