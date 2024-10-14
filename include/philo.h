@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/07 14:08:29 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/14 11:42:46 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_state
 	bool		is_eating;
 	bool		is_dead;
 	int			meals_eaten;
+	int			last_meal;
 }				t_state;
 
 typedef struct s_philosopher
