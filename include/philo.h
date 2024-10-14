@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/14 11:42:46 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:59:47 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_philosopher
 }				t_philosopher;
 
 t_rules			parse_rules(int argc, char **argv);
+t_philosopher	*create_philo(t_rules rules);
 
 // PRINT UTILS
 void			ft_putchar_fd(char c, int fd);
