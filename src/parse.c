@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/07 14:27:28 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:03:16 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ static bool	is_overflowing(char *arg)
 	size_t	len_arg;
 
 	len_arg = ft_strlen(arg);
-	if (len_arg < ft_strlen(STR_U32_MAX))
+	if (len_arg < ft_strlen(STR_I32_MAX))
 		return (false);
-	if (len_arg > ft_strlen(STR_U32_MAX))
+	if (len_arg > ft_strlen(STR_I32_MAX))
 		return (true);
-	return (ft_strncmp(arg, STR_U32_MAX, ft_strlen(STR_U32_MAX)) > 0);
+	return (ft_strncmp(arg, STR_I32_MAX, ft_strlen(STR_I32_MAX)) > 0);
 }
 
 static bool	respect_range(t_rules *rules)
@@ -59,9 +59,9 @@ t_rules	parse_rules(int argc, char **argv)
 	rules.time_to_eat = ft_atoi(argv[TIME_EAT_IDX]);
 	rules.time_to_sleep = ft_atoi(argv[TIME_SLEEP_IDX]);
 	if (argc == 6)
-		rules.nb_of_time_each_philo_must_eat = ft_atoi(argv[5]);
+		rules.max_nb_meals = ft_atoi(argv[MAX_NB_MEALS_IDX]);
 	else
-		rules.nb_of_time_each_philo_must_eat = -1;
+		rules.max_nb_meals = -1;
 	if (!respect_range(&rules))
 		argument_error();
 	return (rules);
