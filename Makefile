@@ -6,7 +6,7 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/10/14 23:47:00 by vafleith         ###   ########.fr        #
+#    Updated: 2024/10/14 23:54:38 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,9 @@ INC = -Iinclude
 
 SRC_DIR = src
 
-SRCS = main.c print.c error_messages.c parse.c parse_utils.c string_utils.c \
-	   philo_init.c handle_time.c simulation.c
+SRCS = main.c print/print.c print/error_messages.c \
+	   parse/parse.c parse/parse_utils.c parse/string_utils.c \
+	   simulate/philo_init.c simulate/handle_time.c simulate/simulation.c
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
 OBJ_DIR = build
