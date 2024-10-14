@@ -6,7 +6,7 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/10/14 23:07:35 by vafleith         ###   ########.fr        #
+#    Updated: 2024/10/14 23:10:30 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC = -Iinclude
 
 SRC_DIR = src
 
-SRCS = main.c print.c error_messages.c parse.c parse_utils.c general_utils.c \
+SRCS = main.c print.c error_messages.c parse.c parse_utils.c string_utils.c \
 	   philo_init.c handle_time.c
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
