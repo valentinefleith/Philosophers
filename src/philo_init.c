@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/14 17:59:46 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:23:11 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,22 @@ t_philosopher	*create_philo(t_rules rules)
 	table = malloc(rules.nb_of_philo * sizeof(t_philosopher));
 	if (!table)
 		return (NULL);
-	current_id = 0;
-	while (current_id < rules.nb_of_philo)
+	current_id = -1;
+	while (++current_id < rules.nb_of_philo)
 	{
 		table[current_id].id = current_id;
-		current_id++;
+		if (current_id % 2)
+		{
+			table[current_id].first_fork_id = current_id;
+			table[current_id].second_fork_id = (current_id + 1)
+				% rules.nb_of_philo;
+		}
+		else
+		{
+			table[current_id].second_fork_id = (current_id + 1)
+				% rules.nb_of_philo;
+			table[current_id].first_fork_id = current_id;
+		}
 	}
 	init_state(table);
 	return (table);
