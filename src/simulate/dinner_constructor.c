@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 15:31:36 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:42:40 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	init_forks_ids(t_philosopher *philos, int index, t_rules rules)
 	}
 }
 
-static t_philosopher	*philos_constructor(t_rules rules)
+static t_philosopher	*philos_constructor(t_rules rules, t_dinner *table)
 {
 	t_philosopher	*philos;
 	int				current_id;
@@ -48,6 +48,7 @@ static t_philosopher	*philos_constructor(t_rules rules)
 		philos[current_id].id = current_id;
 		init_forks_ids(philos, current_id, rules);
 		init_state(philos + current_id);
+		philos[current_id].dinner_table = table;
 		current_id++;
 	}
 	return (philos);
@@ -78,7 +79,7 @@ t_dinner	set_the_table(t_rules rules)
 {
 	t_dinner	table;
 
-	table.philos = philos_constructor(rules);
+	table.philos = philos_constructor(rules, &table);
 	if (!table.philos)
 	{
 		table.forks = NULL;

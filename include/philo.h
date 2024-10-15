@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 15:31:58 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:40:59 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct s_rules
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					max_nb_meals;
-	unsigned long		start_time;
 }						t_rules;
 
 typedef struct s_state
@@ -51,6 +50,8 @@ typedef struct s_state
 	int					last_meal;
 }						t_state;
 
+struct s_dinner;
+
 typedef struct s_philosopher
 {
 	int					id;
@@ -58,6 +59,7 @@ typedef struct s_philosopher
 	t_state				state;
 	int					first_fork_id;
 	int					second_fork_id;
+	struct s_dinner		*dinner_table;
 }						t_philosopher;
 
 typedef pthread_mutex_t	t_mutex;
