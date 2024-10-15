@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 15:04:40 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:31:58 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner dinner_table);
 
 // DESTRUCTORS
-t_mutex	*forks_destructor(t_mutex *forks, int total_nb);
-int table_destructor(t_dinner dinner_table, int nb_threads);
+t_mutex					*forks_destructor(t_mutex *forks, int total_nb);
+int						table_destructor(t_dinner dinner_table, int nb_threads);
 
 // PRINT UTILS
 void					ft_putchar_fd(char c, int fd);

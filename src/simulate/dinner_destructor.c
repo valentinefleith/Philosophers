@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:10:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 15:29:31 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:32:20 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	table_destructor(t_dinner dinner_table, int nb_threads)
 		{
 			printf("Error joining thread %d\n", i);
 			free(dinner_table.philos);
-			return 1;
-		};
+			return (1);
+		}
 		printf("Thread %d has finished.\n", i);
 		i++;
 	}
