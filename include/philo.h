@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/14 23:46:27 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:24:33 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <unistd.h>
 
 # define STR_I32_MAX "2147483647"
+
+# define SUCCESS 0
 
 typedef enum e_rules_idx
 {
@@ -60,10 +62,21 @@ typedef struct s_philosopher
 
 typedef pthread_mutex_t	t_mutex;
 
+typedef struct s_dinner
+{
+	t_philosopher		*philos;
+	t_rules				rules;
+	t_mutex				*forks;
+	size_t				start_time;
+}						t_dinner;
+
 t_rules					parse_rules(int argc, char **argv);
-t_philosopher			*create_philo(t_rules rules);
-unsigned long			get_current_time_ms(void);
-int						start_dinner(t_rules *rules, t_philosopher *table);
+t_dinner				set_the_table(t_rules rules);
+size_t					get_current_time_ms(void);
+int						start_dinner(t_dinner dinner_table);
+
+// DESTRUCTORS
+t_mutex	*forks_destructor(t_mutex *forks, int total_nb);
 
 // PRINT UTILS
 void					ft_putchar_fd(char c, int fd);
