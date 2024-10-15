@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 16:38:02 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:07:07 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 
 static void	*routine(void *args)
 {
-	t_philosopher	*dinner_table;
+	t_philosopher	*plato;
 
-	dinner_table = (t_philosopher *)args;
-	printf("Hello from philo %d\n", dinner_table->id + 1);
+	plato = (t_philosopher *)args;
+	t_dinner *table = plato->dinner_table;
+	pthread_mutex_lock(&table->print_guardian);
+	printf("Hello from philo %d\n", plato->id + 1);
+	pthread_mutex_unlock(&table->print_guardian);
 	return (NULL);
 }
 

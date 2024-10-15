@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 16:40:59 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:46:15 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_dinner
 	t_rules				rules;
 	t_mutex				*forks;
 	size_t				start_time;
+	t_mutex				print_guardian;
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);

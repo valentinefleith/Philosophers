@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 16:42:40 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:06:55 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,8 @@ t_dinner	set_the_table(t_rules rules)
 		return (table);
 	}
 	table.start_time = 0; // not sure
+	if (pthread_mutex_init(&table.print_guardian, NULL) != SUCCESS) {
+		printf("lol\n");
+	}
 	return (table);
 }
