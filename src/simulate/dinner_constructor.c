@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 11:22:41 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/15 15:04:24 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_mutex *forks_constructor(t_rules rules) {
 	while (current_id < rules.nb_of_philo) {
 		if (pthread_mutex_init(forks + current_id, NULL) != SUCCESS) {
 			printf("Mutex %d allocation failed.\n", current_id);
-			return forks_destructor(forks, current_id);
+			return forks_destructor(forks, current_id + 1);
 		}
 		current_id++;
 	}
