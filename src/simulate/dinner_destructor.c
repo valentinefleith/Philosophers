@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:10:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 18:22:40 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:29:26 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	table_destructor(t_dinner dinner_table, int nb_threads)
 			free(dinner_table.philos);
 			return (1);
 		}
-		printf("Thread %d has finished.\n", i);
 		i++;
 	}
 	pthread_mutex_destroy(&(dinner_table.print_guardian));
