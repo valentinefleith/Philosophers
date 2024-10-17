@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 12:01:42 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:17:11 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,24 @@ static t_mutex	*forks_constructor(t_rules rules)
 	return (forks);
 }
 
-t_dinner	set_the_table(t_rules rules)
+void	set_the_table(t_rules rules, t_dinner *table)
 {
-	t_dinner	table;
-
-	table.philos = philos_constructor(rules, &table);
-	if (!table.philos)
+	table->philos = philos_constructor(rules, table);
+	if (!table->philos)
 	{
-		table.forks = NULL;
-		return (table);
+		table->forks = NULL;
+		return ;
 	}
-	table.rules = rules;
-	table.forks = forks_constructor(rules);
-	if (!table.forks)
+	table->rules = rules;
+	table->forks = forks_constructor(rules);
+	if (!table->forks)
 	{
-		free(table.philos);
-		return (table);
+		free(table->philos);
+		return ;
 	}
-	if (pthread_mutex_init(&table.print_guardian, NULL) != SUCCESS) {
+	if (pthread_mutex_init(&table->print_guardian, NULL) != SUCCESS) {
 		printf("lol\n");
 	}
 	//table.start_time = get_current_time_ms();
-	return (table);
+	return ;
 }

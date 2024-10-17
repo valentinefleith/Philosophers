@@ -6,15 +6,15 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/10/17 12:01:03 by vafleith         ###   ########.fr        #
+#    Updated: 2024/10/17 15:17:29 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-CC = clang
-#CFLAGS = -Wall -Wextra -g3
-CFLAGS = -Wall -Wextra -gdwarf-4
+CC = cc
+CFLAGS = -Wall -Wextra -g3
+# CFLAGS = -Wall -Wextra -gdwarf-4
 # CFLAGS += -Werror
 
 INC = -Iinclude

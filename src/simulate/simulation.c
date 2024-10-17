@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 11:58:46 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:25:21 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,20 @@
 static void	print_philologs(char *log, t_philosopher *philo)
 {
 	size_t timestamp;
-	
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
-	//if (!philo->dinner_table->stop_condition && !philo->env->max_ate)
-	printf("%li %i %s\n", timestamp, philo->id, log);
+	printf("%li\t%i\t%s\n", timestamp, philo->id, log);
 	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
 }
 
 static void	*routine(void *params)
 {
 	t_philosopher	*philo;
-	t_dinner *table;
 
 	philo = (t_philosopher *)params;
-	table = philo->dinner_table;
 	print_philologs("is sleeping", philo);
 	return (NULL);
 }
-
 
 int	start_dinner(t_dinner *dinner_table)
 {
