@@ -6,19 +6,34 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 15:25:21 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:42:32 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
 
 static void	print_philologs(char *log, t_philosopher *philo)
 {
 	size_t timestamp;
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
-	printf("%li\t%i\t%s\n", timestamp, philo->id, log);
+	printf("at %li ms \tphilo nb %i\t%s\n", timestamp, philo->id, log);
 	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
+}
+
+static void philo_miam(t_philosopher *philo) {
+	t_dinner *table = philo->dinner_table;
+	pthread_mutex_lock(&table->forks[philo->first_fork_id]);
+	char message[30];
+	sprintf(message, "has taken fork %i", philo->first_fork_id);
+	print_philologs(message, philo);
+	pthread_mutex_lock(&table->forks[philo->second_fork_id]);
+	sprintf(message, "has taken fork %i", philo->second_fork_id);
+	print_philologs(message, philo);
+	pthread_mutex_unlock(&table->forks[philo->first_fork_id]);
+	pthread_mutex_unlock(&table->forks[philo->second_fork_id]);
+	print_philologs("is eating", philo);
 }
 
 static void	*routine(void *params)
@@ -26,7 +41,8 @@ static void	*routine(void *params)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)params;
-	print_philologs("is sleeping", philo);
+	//print_philologs("is sleeping", philo);
+	philo_miam(philo);
 	return (NULL);
 }
 
