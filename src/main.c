@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:09:30 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 15:40:46 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:02:07 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv)
 	dinner_table = set_the_table(rules);
 	if (!dinner_table.philos || !dinner_table.forks)
 		return (EXIT_FAILURE);
-	if (start_dinner(dinner_table) == 1)
+	if (start_dinner(&dinner_table) == 1)
 		return (EXIT_FAILURE);
-	table_destructor(dinner_table, dinner_table.rules.nb_of_philo);
-	// printf("current time: %li\n", get_current_time_ms());
+	//table_destructor(dinner_table, dinner_table.rules.nb_of_philo);
+	return 0;
 }

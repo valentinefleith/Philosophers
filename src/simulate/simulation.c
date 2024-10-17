@@ -6,35 +6,49 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/15 17:07:07 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 11:58:46 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	*routine(void *args)
+static void	print_philologs(char *log, t_philosopher *philo)
 {
-	t_philosopher	*plato;
+	size_t timestamp;
+	
+	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
+	pthread_mutex_lock(&philo->dinner_table->print_guardian);
+	//if (!philo->dinner_table->stop_condition && !philo->env->max_ate)
+	printf("%li %i %s\n", timestamp, philo->id, log);
+	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
+}
 
-	plato = (t_philosopher *)args;
-	t_dinner *table = plato->dinner_table;
-	pthread_mutex_lock(&table->print_guardian);
-	printf("Hello from philo %d\n", plato->id + 1);
-	pthread_mutex_unlock(&table->print_guardian);
+static void	*routine(void *params)
+{
+	t_philosopher	*philo;
+	t_dinner *table;
+
+	philo = (t_philosopher *)params;
+	table = philo->dinner_table;
+	print_philologs("is sleeping", philo);
 	return (NULL);
 }
 
-int	start_dinner(t_dinner dinner_table)
+
+int	start_dinner(t_dinner *dinner_table)
 {
 	int	i;
 
 	i = 0;
-	while (i < dinner_table.rules.nb_of_philo)
+	dinner_table->start_time = get_current_time_ms();
+	while (i < dinner_table->rules.nb_of_philo)
 	{
-		if (pthread_create(&dinner_table.philos[i].thread_id, NULL, routine,
-				&dinner_table.philos[i]) != 0)
-			return (table_destructor(dinner_table, i + 1));
+		dinner_table->philos[i].state.last_meal = get_current_time_ms();
+		if (pthread_create(&dinner_table->philos[i].thread_id,
+				NULL, routine, &(dinner_table->philos[i])))
+			return (1);
 		i++;
 	}
+	table_destructor(dinner_table, dinner_table->rules.nb_of_philo);
 	return (0);
 }

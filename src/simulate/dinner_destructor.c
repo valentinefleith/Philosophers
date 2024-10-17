@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:10:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/16 11:29:26 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 12:00:05 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_mutex	*forks_destructor(t_mutex *forks, int total_nb)
 	return (NULL);
 }
 
-int	table_destructor(t_dinner dinner_table, int nb_threads)
+/*int	table_destructor(t_dinner dinner_table, int nb_threads)
 {
 	int	i;
 
@@ -45,4 +45,27 @@ int	table_destructor(t_dinner dinner_table, int nb_threads)
 	forks_destructor(dinner_table.forks, dinner_table.rules.nb_of_philo);
 	free(dinner_table.philos);
 	return (1);
+}*/
+
+
+int table_destructor(t_dinner *table, int nb_threads)
+{
+	int	i;
+
+	if (table->rules.nb_of_philo == 1)
+		pthread_detach(table->philos[0].thread_id);
+	else
+	{
+		i = -1;
+		while (++i < nb_threads)
+			pthread_join(table->philos[i].thread_id, NULL);
+	}
+	i = -1;
+	while (++i < table->rules.nb_of_philo)
+		pthread_mutex_destroy(&table->forks[i]);
+	pthread_mutex_destroy(&table->print_guardian);
+	i = -1;
+	free(table->philos);
+	free(table->forks);
+	return 0;
 }
