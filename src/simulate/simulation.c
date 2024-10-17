@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:36:10 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:59:18 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,20 @@ static void	print_philologs(char *log, t_philosopher *philo)
 static void	philo_miam(t_philosopher *philo)
 {
 	t_dinner	*table;
-	char		message[30];
+	char message[100];
 
 	table = philo->dinner_table;
 	pthread_mutex_lock(&table->forks[philo->first_fork_id]);
-	sprintf(message, "has taken fork %i", philo->first_fork_id);
-	print_philologs(message, philo);
+	print_philologs("has taken the first fork", philo);
 	pthread_mutex_lock(&table->forks[philo->second_fork_id]);
-	sprintf(message, "has taken fork %i", philo->second_fork_id);
-	print_philologs(message, philo);
+	print_philologs("has taken the second fork", philo);
 	print_philologs("is eating", philo);
+	pthread_mutex_lock(&table->status_guardian);
+	philo->state.last_meal = get_current_time_ms();
+	philo->state.meals_eaten++;
+	sprintf(message, "MEALS EATEN UPDATED TO %i", philo->state.meals_eaten);
+	print_philologs(message, philo);
+	pthread_mutex_unlock(&table->status_guardian);
 	sleep_boosted(table->rules.time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->first_fork_id]);
 	pthread_mutex_unlock(&table->forks[philo->second_fork_id]);
@@ -61,7 +65,7 @@ static void	*routine(void *params)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)params;
-	while (1)
+	while (get_current_time_ms() < philo->dinner_table->start_time + 1000)
 	{
 		philo_miam(philo);
 		philo_zzz(philo);

@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 15:56:20 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:58:57 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	init_state(t_philosopher *philos)
 {
 	philos->state.is_dead = false;
-	philos->state.is_eating = false;
 	philos->state.last_meal = -1;
 	philos->state.meals_eaten = 0;
 }
@@ -95,7 +94,10 @@ void	set_the_table(t_rules rules, t_dinner *table)
 		return ;
 	}
 	if (pthread_mutex_init(&table->print_guardian, NULL) != SUCCESS) {
-		printf("lol\n");
+		printf("rip\n");
+	}
+	if (pthread_mutex_init(&table->status_guardian, NULL) != SUCCESS) {
+		printf("rip\n");
 	}
 	//table.start_time = get_current_time_ms();
 	return ;

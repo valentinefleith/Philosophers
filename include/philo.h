@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:17:06 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:58:17 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ typedef struct s_rules
 
 typedef struct s_state
 {
-	bool				is_eating;
 	bool				is_dead;
 	int					meals_eaten;
 	int					last_meal;
 }						t_state;
 
 struct s_dinner;
+typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_philosopher
 {
@@ -62,7 +62,6 @@ typedef struct s_philosopher
 	struct s_dinner		*dinner_table;
 }						t_philosopher;
 
-typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_dinner
 {
@@ -71,6 +70,7 @@ typedef struct s_dinner
 	t_mutex				*forks;
 	size_t				start_time;
 	t_mutex				print_guardian;
+	t_mutex status_guardian;
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);
