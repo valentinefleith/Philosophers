@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/18 18:43:47 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:40:41 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	init_state(t_philosopher *philos)
 {
 	philos->state.is_full = false;
-	philos->state.last_meal = -1;
+	philos->state.last_meal = 0;
 	philos->state.meals_eaten = 0;
 }
 
@@ -89,6 +89,8 @@ void	set_the_table(t_rules rules, t_dinner *table)
 	}
 	table->rules = rules;
 	table->someones_dead = false;
+	table->stop_simulation = false;
+	table->everyones_full = false;
 	table->forks = forks_constructor(rules);
 	if (!table->forks)
 	{

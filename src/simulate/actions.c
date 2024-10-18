@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/18 18:55:54 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:39:52 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ void	print_philologs(char *log, t_philosopher *philo, bool dead)
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
 	if (dead)
 		printf("\033[0;31m");
-	else if (philo->id == 0)
+	else if (philo->id % 4 == 0)
 		printf("\033[0;32m");
-	else if (philo->id == 1)
+	else if (philo->id % 4 == 1)
 		printf("\033[0;33m");
-	else if (philo->id == 2)
+	else if (philo->id % 4 == 2)
 		printf("\033[0;34m");
-	else if (philo->id == 3)
+	else if (philo->id % 4== 3)
 		printf("\033[0;35m");
-	printf("at %li ms \tphilo nb %i\t%s\n", timestamp, philo->id, log);
+	printf("%li ms \tphilo nb %i\t%s\n", timestamp, philo->id, log);
 	printf("\033[0m");
 	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
 }
@@ -67,7 +67,9 @@ void	philo_hmm(t_philosopher *philo)
 void	philo_couic(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->dinner_table->death_guardian);
-	philo->dinner_table->someones_dead = true;
+	philo->dinner_table->stop_simulation = true;
 	pthread_mutex_unlock(&philo->dinner_table->death_guardian);
+	char message[100];
+	sprintf(message, "last meal time:  %li, \t current_time = %li\n", philo->state.last_meal, get_current_time_ms());
 	print_philologs("died", philo, true);
 };

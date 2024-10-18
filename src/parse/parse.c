@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 22:35:52 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/14 23:03:16 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:31:19 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_rules	parse_rules(int argc, char **argv)
 	if (argc == 6)
 		rules.max_nb_meals = ft_atoi(argv[MAX_NB_MEALS_IDX]);
 	else
-		rules.max_nb_meals = -1;
+		rules.max_nb_meals = 0;
 	if (!respect_range(&rules))
 		argument_error();
 	return (rules);

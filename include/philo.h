@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/18 19:04:32 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/19 00:40:17 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_state
 {
 	bool				is_full;
 	int					meals_eaten;
-	int					last_meal;
+	size_t					last_meal;
 }						t_state;
 
 struct s_dinner;
@@ -69,6 +69,8 @@ typedef struct s_dinner
 	t_mutex				*forks;
 	size_t				start_time;
 	bool				someones_dead;
+	bool				stop_simulation;
+	bool				everyones_full;
 	t_mutex				death_guardian;
 	t_mutex				print_guardian;
 	t_mutex				status_guardian;
