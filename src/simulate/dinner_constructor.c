@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:58:57 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:43:47 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 static void	init_state(t_philosopher *philos)
 {
-	philos->state.is_dead = false;
+	philos->state.is_full = false;
 	philos->state.last_meal = -1;
 	philos->state.meals_eaten = 0;
 }
 
 static void	init_forks_ids(t_philosopher *philos, int index, t_rules rules)
 {
-	if (index == 0) {
+	if (index == 0)
+	{
 		philos[index].first_fork_id = rules.nb_of_philo - 1;
 		philos[index].second_fork_id = 0;
 	}
@@ -87,18 +88,18 @@ void	set_the_table(t_rules rules, t_dinner *table)
 		return ;
 	}
 	table->rules = rules;
+	table->someones_dead = false;
 	table->forks = forks_constructor(rules);
 	if (!table->forks)
 	{
 		free(table->philos);
 		return ;
 	}
-	if (pthread_mutex_init(&table->print_guardian, NULL) != SUCCESS) {
+	if (pthread_mutex_init(&table->print_guardian, NULL) != SUCCESS)
 		printf("rip\n");
-	}
-	if (pthread_mutex_init(&table->status_guardian, NULL) != SUCCESS) {
+	if (pthread_mutex_init(&table->status_guardian, NULL) != SUCCESS)
 		printf("rip\n");
-	}
-	//table.start_time = get_current_time_ms();
+	if (pthread_mutex_init(&table->death_guardian, NULL) != SUCCESS)
+		printf("rip\n");
 	return ;
 }

@@ -6,58 +6,35 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:59:18 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:10:13 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdio.h>
 
-static void	print_philologs(char *log, t_philosopher *philo)
+static void	check_philo_life(t_dinner *dinner_table)
 {
-	size_t	timestamp;
+	t_philosopher	*philos;
+	int				i;
+	size_t			last_meal_time;
+	bool			is_full;
 
-	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
-	pthread_mutex_lock(&philo->dinner_table->print_guardian);
-	if (philo->id == 0)
-		printf("\033[0;32m");
-	else if (philo->id == 1)
-		printf("\033[0;33m");
-	else if (philo->id == 2)
-		printf("\033[0;34m");
-	else if (philo->id == 3)
-		printf("\033[0;35m");
-	printf("at %li ms \tphilo nb %i\t%s\n", timestamp, philo->id, log);
-	printf("\033[0m");
-	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
-}
-
-static void	philo_miam(t_philosopher *philo)
-{
-	t_dinner	*table;
-	char message[100];
-
-	table = philo->dinner_table;
-	pthread_mutex_lock(&table->forks[philo->first_fork_id]);
-	print_philologs("has taken the first fork", philo);
-	pthread_mutex_lock(&table->forks[philo->second_fork_id]);
-	print_philologs("has taken the second fork", philo);
-	print_philologs("is eating", philo);
-	pthread_mutex_lock(&table->status_guardian);
-	philo->state.last_meal = get_current_time_ms();
-	philo->state.meals_eaten++;
-	sprintf(message, "MEALS EATEN UPDATED TO %i", philo->state.meals_eaten);
-	print_philologs(message, philo);
-	pthread_mutex_unlock(&table->status_guardian);
-	sleep_boosted(table->rules.time_to_eat);
-	pthread_mutex_unlock(&table->forks[philo->first_fork_id]);
-	pthread_mutex_unlock(&table->forks[philo->second_fork_id]);
-}
-
-static void	philo_zzz(t_philosopher *philo)
-{
-	print_philologs("is sleeping", philo);
-	sleep_boosted(philo->dinner_table->rules.time_to_sleep);
+	philos = dinner_table->philos;
+	while (!dinner_table->someones_dead)
+	{
+		i = 0;
+		while (i < dinner_table->rules.nb_of_philo)
+		{
+			pthread_mutex_lock(&dinner_table->status_guardian);
+			last_meal_time = philos[i].state.last_meal;
+			is_full = philos[i].state.is_full;
+			pthread_mutex_unlock(&dinner_table->status_guardian);
+			if (get_current_time_ms()
+				- last_meal_time > (size_t)dinner_table->rules.time_to_die && !is_full && last_meal_time != 0)
+				philo_couic(philos + i);
+			i++;
+		}
+	}
 }
 
 static void	*routine(void *params)
@@ -65,10 +42,21 @@ static void	*routine(void *params)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)params;
-	while (get_current_time_ms() < philo->dinner_table->start_time + 1000)
+	while (!philo->dinner_table->someones_dead)
 	{
 		philo_miam(philo);
-		philo_zzz(philo);
+		if (philo->state.meals_eaten == philo->dinner_table->rules.max_nb_meals
+			&& philo->dinner_table->rules.max_nb_meals > 0)
+		{
+			pthread_mutex_lock(&philo->dinner_table->status_guardian);
+			philo->state.is_full = true;
+			pthread_mutex_unlock(&philo->dinner_table->status_guardian);
+			break ;
+		}
+		if (!philo->state.is_full) {
+			philo_zzz(philo);
+			philo_hmm(philo);
+		}
 	}
 	return (NULL);
 }
@@ -81,12 +69,13 @@ int	start_dinner(t_dinner *dinner_table)
 	dinner_table->start_time = get_current_time_ms();
 	while (i < dinner_table->rules.nb_of_philo)
 	{
-		dinner_table->philos[i].state.last_meal = get_current_time_ms();
+		dinner_table->philos[i].state.last_meal = 0;
 		if (pthread_create(&dinner_table->philos[i].thread_id, NULL, routine,
 				&(dinner_table->philos[i])))
 			return (1);
 		i++;
 	}
+	check_philo_life(dinner_table);
 	table_destructor(dinner_table, dinner_table->rules.nb_of_philo);
 	return (0);
 }

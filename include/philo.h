@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:58:17 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:04:32 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct s_rules
 
 typedef struct s_state
 {
-	bool				is_dead;
+	bool				is_full;
 	int					meals_eaten;
 	int					last_meal;
 }						t_state;
@@ -62,15 +62,16 @@ typedef struct s_philosopher
 	struct s_dinner		*dinner_table;
 }						t_philosopher;
 
-
 typedef struct s_dinner
 {
 	t_philosopher		*philos;
 	t_rules				rules;
 	t_mutex				*forks;
 	size_t				start_time;
+	bool				someones_dead;
+	t_mutex				death_guardian;
 	t_mutex				print_guardian;
-	t_mutex status_guardian;
+	t_mutex				status_guardian;
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);
@@ -78,6 +79,14 @@ void					set_the_table(t_rules rules, t_dinner *table);
 size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner *dinner_table);
 void					sleep_boosted(size_t duration_in_ms);
+
+// ACTIONS
+
+void					philo_miam(t_philosopher *philo);
+void					philo_zzz(t_philosopher *philo);
+void					philo_hmm(t_philosopher *philo);
+void					philo_couic(t_philosopher *philo);
+void				print_philologs(char *log, t_philosopher *philo, bool dead);
 
 // DESTRUCTORS
 t_mutex					*forks_destructor(t_mutex *forks, int total_nb);
