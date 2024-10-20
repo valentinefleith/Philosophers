@@ -6,11 +6,13 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 15:50:27 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:25:55 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
+#include <time.h>
 
 
 void	print_philologs(char *log, t_philosopher *philo, bool dead)
@@ -18,8 +20,6 @@ void	print_philologs(char *log, t_philosopher *philo, bool dead)
 	size_t	timestamp;
 	
 	if (has_to_stop(philo->dinner_table) && !dead)
-		return;
-	if (dead && philo->meals_eaten == philo->dinner_table->rules->max_nb_meals)
 		return;
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
@@ -66,6 +66,16 @@ void	philo_zzz(t_philosopher *philo)
 void	philo_hmm(t_philosopher *philo)
 {
 	print_philologs("is thinking", philo, false);
+	/*size_t time_until_death;
+	size_t time_since_last_meal;
+	pthread_mutex_lock(&philo->dinner_table->status_guardian);
+	time_since_last_meal = get_current_time_ms() - philo->last_meal;
+	pthread_mutex_unlock(&philo->dinner_table->status_guardian);
+	time_until_death = philo->dinner_table->rules->time_to_die - time_since_last_meal;
+	while (time_until_death >= 100) {
+		time_until_death = philo->dinner_table->rules->time_to_die - time_since_last_meal;
+		sleep_boosted(50);
+	}*/
 }
 
 void	philo_couic(t_philosopher *philo)
@@ -74,5 +84,8 @@ void	philo_couic(t_philosopher *philo)
 	philo->dinner_table->stop_simulation = true;
 	philo->is_dead = true;
 	pthread_mutex_unlock(&philo->dinner_table->death_guardian);
-	print_philologs("died", philo, true);
+	pthread_mutex_lock(&philo->dinner_table->status_guardian);
+	if (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals)
+		print_philologs("died", philo, true);
+	pthread_mutex_unlock(&philo->dinner_table->status_guardian);
 };
