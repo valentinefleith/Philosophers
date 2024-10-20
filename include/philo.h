@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/19 00:40:17 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:10:44 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_state
 	bool				is_full;
 	int					meals_eaten;
 	size_t					last_meal;
+	bool is_dead;
 }						t_state;
 
 struct s_dinner;
@@ -56,16 +57,20 @@ typedef struct s_philosopher
 {
 	int					id;
 	pthread_t			thread_id;
-	t_state				state;
+	//t_state				*state;
 	int					first_fork_id;
 	int					second_fork_id;
 	struct s_dinner		*dinner_table;
+	bool				is_full;
+	int meals_eaten;
+	size_t last_meal;
+	bool is_dead;
 }						t_philosopher;
 
 typedef struct s_dinner
 {
 	t_philosopher		*philos;
-	t_rules				rules;
+	t_rules				*rules;
 	t_mutex				*forks;
 	size_t				start_time;
 	bool				someones_dead;
@@ -77,7 +82,7 @@ typedef struct s_dinner
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);
-void					set_the_table(t_rules rules, t_dinner *table);
+void					set_the_table(t_rules *rules, t_dinner *table);
 size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner *dinner_table);
 void					sleep_boosted(size_t duration_in_ms);

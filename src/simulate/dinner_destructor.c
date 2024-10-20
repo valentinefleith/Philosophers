@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:10:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/17 16:11:55 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:01:56 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	table_destructor(t_dinner *dinner_table, int nb_threads)
 		i++;
 	}
 	pthread_mutex_destroy(&(dinner_table->print_guardian));
-	forks_destructor(dinner_table->forks, dinner_table->rules.nb_of_philo);
+	forks_destructor(dinner_table->forks, dinner_table->rules->nb_of_philo);
 	free(dinner_table->philos);
 	return (1);
 }

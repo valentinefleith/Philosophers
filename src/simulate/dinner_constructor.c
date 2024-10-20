@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/19 00:40:41 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:21:22 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,42 @@
 
 static void	init_state(t_philosopher *philos)
 {
-	philos->state.is_full = false;
-	philos->state.last_meal = 0;
-	philos->state.meals_eaten = 0;
+	philos->is_full = false;
+	philos->last_meal = 0;
+	philos->meals_eaten = 0;
+	philos->is_dead = false;
 }
 
-static void	init_forks_ids(t_philosopher *philos, int index, t_rules rules)
+static void	init_forks_ids(t_philosopher *philos, int index, t_rules *rules)
 {
-	if (index == 0)
-	{
-		philos[index].first_fork_id = rules.nb_of_philo - 1;
-		philos[index].second_fork_id = 0;
-	}
-	else if (index % 2)
+	//if (index == 0)
+	//{
+	//	philos[index].first_fork_id = rules->nb_of_philo - 1;
+	//	philos[index].second_fork_id = 0;
+	//}
+	//else if (index % 2)
+	if (index % 2 == 0)
 	{
 		philos[index].first_fork_id = index;
-		philos[index].second_fork_id = (index + 1) % rules.nb_of_philo;
+		philos[index].second_fork_id = (index + 1) % rules->nb_of_philo;
 	}
 	else
 	{
-		philos[index].second_fork_id = (index + 1) % rules.nb_of_philo;
+		philos[index].second_fork_id = (index + 1) % rules->nb_of_philo;
 		philos[index].first_fork_id = index;
 	}
 }
 
-static t_philosopher	*philos_constructor(t_rules rules, t_dinner *table)
+static t_philosopher	*philos_constructor(t_rules *rules, t_dinner *table)
 {
 	t_philosopher	*philos;
 	int				current_id;
 
-	philos = malloc(rules.nb_of_philo * sizeof(t_philosopher));
+	philos = malloc(rules->nb_of_philo * sizeof(t_philosopher));
 	if (!philos)
 		return (NULL);
 	current_id = 0;
-	while (current_id < rules.nb_of_philo)
+	while (current_id < rules->nb_of_philo)
 	{
 		philos[current_id].id = current_id;
 		init_forks_ids(philos, current_id, rules);
@@ -58,16 +60,16 @@ static t_philosopher	*philos_constructor(t_rules rules, t_dinner *table)
 	return (philos);
 }
 
-static t_mutex	*forks_constructor(t_rules rules)
+static t_mutex	*forks_constructor(t_rules *rules)
 {
 	t_mutex	*forks;
 	int		current_id;
 
-	forks = malloc(rules.nb_of_philo * sizeof(t_mutex));
+	forks = malloc(rules->nb_of_philo * sizeof(t_mutex));
 	if (!forks)
 		return (NULL);
 	current_id = 0;
-	while (current_id < rules.nb_of_philo)
+	while (current_id < rules->nb_of_philo)
 	{
 		if (pthread_mutex_init(forks + current_id, NULL) != SUCCESS)
 		{
@@ -79,7 +81,7 @@ static t_mutex	*forks_constructor(t_rules rules)
 	return (forks);
 }
 
-void	set_the_table(t_rules rules, t_dinner *table)
+void	set_the_table(t_rules *rules, t_dinner *table)
 {
 	table->philos = philos_constructor(rules, table);
 	if (!table->philos)

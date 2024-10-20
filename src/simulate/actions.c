@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/19 00:39:52 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:32:57 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 void	print_philologs(char *log, t_philosopher *philo, bool dead)
 {
 	size_t	timestamp;
-
+	
+	if (philo->dinner_table->stop_simulation && !dead)
+		return;
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
 	if (dead)
@@ -29,7 +31,7 @@ void	print_philologs(char *log, t_philosopher *philo, bool dead)
 		printf("\033[0;34m");
 	else if (philo->id % 4== 3)
 		printf("\033[0;35m");
-	printf("%li ms \tphilo nb %i\t%s\n", timestamp, philo->id, log);
+	printf("%li ms \tphilo nb %i\t%s\n", timestamp, philo->id + 1, log);
 	printf("\033[0m");
 	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
 }
@@ -44,11 +46,11 @@ void	philo_miam(t_philosopher *philo)
 	pthread_mutex_lock(&table->forks[philo->second_fork_id]);
 	print_philologs("has taken the second fork", philo, false);
 	pthread_mutex_lock(&table->status_guardian);
-	philo->state.last_meal = get_current_time_ms();
-	philo->state.meals_eaten++;
+	philo->last_meal = get_current_time_ms();
+	philo->meals_eaten++;
 	pthread_mutex_unlock(&table->status_guardian);
 	print_philologs("is eating", philo, false);
-	sleep_boosted(table->rules.time_to_eat);
+	sleep_boosted(table->rules->time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->first_fork_id]);
 	pthread_mutex_unlock(&table->forks[philo->second_fork_id]);
 }
@@ -56,7 +58,7 @@ void	philo_miam(t_philosopher *philo)
 void	philo_zzz(t_philosopher *philo)
 {
 	print_philologs("is sleeping", philo, false);
-	sleep_boosted(philo->dinner_table->rules.time_to_sleep);
+	sleep_boosted(philo->dinner_table->rules->time_to_sleep);
 }
 
 void	philo_hmm(t_philosopher *philo)
@@ -68,8 +70,7 @@ void	philo_couic(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->dinner_table->death_guardian);
 	philo->dinner_table->stop_simulation = true;
+	philo->is_dead = true;
 	pthread_mutex_unlock(&philo->dinner_table->death_guardian);
-	char message[100];
-	sprintf(message, "last meal time:  %li, \t current_time = %li\n", philo->state.last_meal, get_current_time_ms());
 	print_philologs("died", philo, true);
 };
