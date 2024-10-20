@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 14:44:46 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:48:44 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner *dinner_table);
 void					sleep_boosted(size_t duration_in_ms);
 bool					has_to_stop(t_dinner *dinner_table);
+bool	are_full(t_dinner *dinner_table, t_philosopher *philos);
 
 // ACTIONS
 

@@ -6,13 +6,13 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 15:35:02 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:47:36 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
+bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int	i;
 
