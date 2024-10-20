@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 14:10:44 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:44:46 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_state
 {
 	bool				is_full;
 	int					meals_eaten;
-	size_t					last_meal;
-	bool is_dead;
+	size_t				last_meal;
+	bool				is_dead;
 }						t_state;
 
 struct s_dinner;
@@ -57,14 +57,14 @@ typedef struct s_philosopher
 {
 	int					id;
 	pthread_t			thread_id;
-	//t_state				*state;
+	// t_state				*state;
 	int					first_fork_id;
 	int					second_fork_id;
 	struct s_dinner		*dinner_table;
 	bool				is_full;
-	int meals_eaten;
-	size_t last_meal;
-	bool is_dead;
+	int					meals_eaten;
+	size_t				last_meal;
+	bool				is_dead;
 }						t_philosopher;
 
 typedef struct s_dinner
@@ -86,6 +86,7 @@ void					set_the_table(t_rules *rules, t_dinner *table);
 size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner *dinner_table);
 void					sleep_boosted(size_t duration_in_ms);
+bool					has_to_stop(t_dinner *dinner_table);
 
 // ACTIONS
 
@@ -93,7 +94,8 @@ void					philo_miam(t_philosopher *philo);
 void					philo_zzz(t_philosopher *philo);
 void					philo_hmm(t_philosopher *philo);
 void					philo_couic(t_philosopher *philo);
-void				print_philologs(char *log, t_philosopher *philo, bool dead);
+void					print_philologs(char *log, t_philosopher *philo,
+							bool dead);
 
 // DESTRUCTORS
 t_mutex					*forks_destructor(t_mutex *forks, int total_nb);

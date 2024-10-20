@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 14:32:57 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:44:24 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_philologs(char *log, t_philosopher *philo, bool dead)
 {
 	size_t	timestamp;
 	
-	if (philo->dinner_table->stop_simulation && !dead)
+	if (has_to_stop(philo->dinner_table) && !dead)
 		return;
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);

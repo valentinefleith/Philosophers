@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 14:30:10 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 14:57:33 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,41 +17,51 @@ static bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
 	int	i;
 
 	i = 0;
+	pthread_mutex_lock(&dinner_table->status_guardian);
 	while (i < dinner_table->rules->nb_of_philo
 		&& dinner_table->rules->max_nb_meals > 0
 		&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
 		i++;
+	pthread_mutex_unlock(&dinner_table->status_guardian);
 	return (i == dinner_table->rules->nb_of_philo);
 }
 
+static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
+{
+	int		i;
+	size_t	last_meal_time;
+	size_t	actual_time;
 
-static int check_philo_life(t_dinner *dinner_table, t_philosopher *philos) {
-	int i;
-	size_t last_meal_time;
-	size_t actual_time;
-
-	while (1) {
+	while (1)
+	{
 		i = 0;
-		while (i < dinner_table->rules->nb_of_philo) {
+		while (i < dinner_table->rules->nb_of_philo)
+		{
 			if (are_full(dinner_table, philos))
-				return 1;
+				return (1);
+			pthread_mutex_lock(&dinner_table->status_guardian);
 			last_meal_time = philos[i].last_meal;
+			pthread_mutex_unlock(&dinner_table->status_guardian);
 			actual_time = get_current_time_ms();
-			if (actual_time - last_meal_time > (size_t)dinner_table->rules->time_to_die)
+			if (actual_time
+				- last_meal_time > (size_t)dinner_table->rules->time_to_die)
 			{
 				philo_couic(&philos[i]);
-				return 1;
+				return (1);
 			}
 		}
 	}
-	return 0;
+	return (0);
 }
 
-static bool has_to_stop(t_dinner *dinner_table) {
+bool	has_to_stop(t_dinner *dinner_table)
+{
+	bool	status;
+
 	pthread_mutex_lock(&dinner_table->death_guardian);
-	bool status = dinner_table->stop_simulation;
+	status = dinner_table->stop_simulation;
 	pthread_mutex_unlock(&dinner_table->death_guardian);
-	return status;
+	return (status);
 }
 
 static void	*routine(void *params)
@@ -59,7 +69,9 @@ static void	*routine(void *params)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)params;
-	while (!has_to_stop(philo->dinner_table) && (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals || philo->dinner_table->rules->max_nb_meals == 0))
+	while (!has_to_stop(philo->dinner_table)
+		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
+			|| philo->dinner_table->rules->max_nb_meals == 0))
 	{
 		philo_miam(philo);
 		if (!has_to_stop(philo->dinner_table))
