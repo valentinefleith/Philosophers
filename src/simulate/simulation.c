@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 14:57:33 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 15:35:02 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
 	int		i;
 	size_t	last_meal_time;
 	size_t	actual_time;
-
+	
+	if (dinner_table->rules->nb_of_philo == 1)
+		return 0;
 	while (1)
 	{
 		i = 0;
@@ -44,7 +46,7 @@ static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
 			pthread_mutex_unlock(&dinner_table->status_guardian);
 			actual_time = get_current_time_ms();
 			if (actual_time
-				- last_meal_time > (size_t)dinner_table->rules->time_to_die)
+				- last_meal_time >= (size_t)dinner_table->rules->time_to_die)
 			{
 				philo_couic(&philos[i]);
 				return (1);
@@ -64,11 +66,22 @@ bool	has_to_stop(t_dinner *dinner_table)
 	return (status);
 }
 
+static void *lonely_philo(t_philosopher *philo) {
+	pthread_mutex_lock(&philo->dinner_table->forks[0]);
+	print_philologs("has taken the first fork", philo, false);
+	sleep_boosted(philo->dinner_table->rules->time_to_die);
+	pthread_mutex_unlock(&philo->dinner_table->forks[0]);
+	philo_couic(philo);
+	return NULL;
+}
+
 static void	*routine(void *params)
 {
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)params;
+	if (philo->dinner_table->rules->nb_of_philo == 1)
+		return lonely_philo(philo);
 	while (!has_to_stop(philo->dinner_table)
 		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
 			|| philo->dinner_table->rules->max_nb_meals == 0))
