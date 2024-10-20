@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 15:47:36 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:51:30 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
 			if (actual_time
 				- last_meal_time >= (size_t)dinner_table->rules->time_to_die)
 			{
+				pthread_mutex_lock(&dinner_table->miam_guardian);
 				philo_couic(&philos[i]);
+				pthread_mutex_unlock(&dinner_table->miam_guardian);
 				return (1);
 			}
 		}
@@ -71,7 +73,7 @@ static void *lonely_philo(t_philosopher *philo) {
 	print_philologs("has taken the first fork", philo, false);
 	sleep_boosted(philo->dinner_table->rules->time_to_die);
 	pthread_mutex_unlock(&philo->dinner_table->forks[0]);
-	philo_couic(philo);
+	print_philologs("died", philo, true);
 	return NULL;
 }
 

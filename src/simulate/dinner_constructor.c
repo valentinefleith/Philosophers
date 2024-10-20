@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 17:59:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 15:17:16 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/20 17:52:14 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,15 @@ static void	init_state(t_philosopher *philos)
 
 static void	init_forks_ids(t_philosopher *philos, int index, t_rules *rules)
 {
-	if (index == 0)
-	{
-		philos[index].first_fork_id = rules->nb_of_philo - 1;
-		philos[index].second_fork_id = 0;
-	}
-	else if (index % 2)
-	//if (index % 2 == 0)
+	if (index % 2 == 0)
 	{
 		philos[index].first_fork_id = index;
 		philos[index].second_fork_id = (index + 1) % rules->nb_of_philo;
 	}
 	else
 	{
-		philos[index].second_fork_id = (index + 1) % rules->nb_of_philo;
-		philos[index].first_fork_id = index;
+		philos[index].first_fork_id = (index + 1) % rules->nb_of_philo;
+		philos[index].second_fork_id = index;
 	}
 }
 
@@ -104,6 +98,8 @@ void	set_the_table(t_rules *rules, t_dinner *table)
 	if (pthread_mutex_init(&table->status_guardian, NULL) != SUCCESS)
 		printf("rip\n");
 	if (pthread_mutex_init(&table->death_guardian, NULL) != SUCCESS)
+		printf("rip\n");
+	if (pthread_mutex_init(&table->miam_guardian, NULL) != SUCCESS)
 		printf("rip\n");
 	return ;
 }
