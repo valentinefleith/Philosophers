@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 17:51:30 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/21 21:13:42 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,10 @@ static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
 			if (actual_time
 				- last_meal_time >= (size_t)dinner_table->rules->time_to_die)
 			{
-				pthread_mutex_lock(&dinner_table->miam_guardian);
 				philo_couic(&philos[i]);
-				pthread_mutex_unlock(&dinner_table->miam_guardian);
 				return (1);
 			}
+			i++;
 		}
 	}
 	return (0);
@@ -106,7 +105,7 @@ int	start_dinner(t_dinner *dinner_table)
 	dinner_table->start_time = get_current_time_ms();
 	while (i < dinner_table->rules->nb_of_philo)
 	{
-		dinner_table->philos[i].last_meal = 0;
+		dinner_table->philos[i].last_meal = dinner_table->start_time;
 		if (pthread_create(&dinner_table->philos[i].thread_id, NULL, routine,
 				&(dinner_table->philos[i])))
 		{
