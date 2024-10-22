@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/22 11:19:01 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:16:32 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	philo_zzz(t_philosopher *philo)
 void	philo_hmm(t_philosopher *philo)
 {
 	print_philologs("is thinking", philo, false);
-	sleep_boosted((philo->dinner_table->rules->time_to_die - (philo->dinner_table->rules->time_to_eat + philo->dinner_table->rules->time_to_sleep)) * 1000 / 2);
+	//sleep_boosted(50);
 }
 
 void	philo_couic(t_philosopher *philo)
@@ -77,4 +77,4 @@ void	philo_couic(t_philosopher *philo)
 	if (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals)
 		print_philologs("died", philo, true);
 	pthread_mutex_unlock(&philo->dinner_table->status_guardian);
-};
+}

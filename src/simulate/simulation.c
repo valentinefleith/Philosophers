@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/22 10:21:40 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:17:15 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 			}
 			i++;
 		}
+		usleep(50);
 	}
 	return (0);
 }
@@ -105,7 +106,6 @@ int	start_dinner(t_dinner *dinner_table)
 	dinner_table->start_time = get_current_time_ms();
 	while (i < dinner_table->rules->nb_of_philo)
 	{
-		dinner_table->philos[i].last_meal = dinner_table->start_time;
 		if (pthread_create(&dinner_table->philos[i].thread_id, NULL, routine,
 				&(dinner_table->philos[i])))
 		{
@@ -113,6 +113,9 @@ int	start_dinner(t_dinner *dinner_table)
 			free(dinner_table->forks);
 			return (1);
 		}
+		pthread_mutex_lock(&dinner_table->status_guardian);
+		dinner_table->philos[i].last_meal = dinner_table->start_time;
+		pthread_mutex_unlock(&dinner_table->status_guardian);
 		usleep(100);
 		i++;
 	}
