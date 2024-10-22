@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 17:49:58 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:33:26 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,22 +42,13 @@ typedef struct s_rules
 	int					max_nb_meals;
 }						t_rules;
 
-typedef struct s_state
-{
-	bool				is_full;
-	int					meals_eaten;
-	size_t				last_meal;
-	bool				is_dead;
-}						t_state;
-
-struct s_dinner;
+struct	s_dinner;
 typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_philosopher
 {
 	int					id;
 	pthread_t			thread_id;
-	// t_state				*state;
 	int					first_fork_id;
 	int					second_fork_id;
 	struct s_dinner		*dinner_table;
@@ -79,7 +70,7 @@ typedef struct s_dinner
 	t_mutex				death_guardian;
 	t_mutex				print_guardian;
 	t_mutex				status_guardian;
-	t_mutex miam_guardian;
+	t_mutex				miam_guardian;
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);
@@ -88,14 +79,14 @@ size_t					get_current_time_ms(void);
 int						start_dinner(t_dinner *dinner_table);
 void					sleep_boosted(size_t duration_in_ms);
 bool					has_to_stop(t_dinner *dinner_table);
-bool	are_full(t_dinner *dinner_table, t_philosopher *philos);
+bool					are_full(t_dinner *dinner_table, t_philosopher *philos);
 
 // ACTIONS
 
 void					philo_miam(t_philosopher *philo);
 void					philo_zzz(t_philosopher *philo);
 void					philo_hmm(t_philosopher *philo);
-void					philo_couic(t_philosopher *philo);
+int						philo_couic(t_philosopher *philo);
 void					print_philologs(char *log, t_philosopher *philo,
 							bool dead);
 

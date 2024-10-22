@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:09:30 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/20 13:58:14 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:23:34 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,5 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (start_dinner(&dinner_table) == 1)
 		return (EXIT_FAILURE);
-	//table_destructor(dinner_table, dinner_table.rules.nb_of_philo);
-	return 0;
+	return (0);
 }

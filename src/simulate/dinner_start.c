@@ -1,39 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   simulation.c                                       :+:      :+:    :+:   */
+/*   dinner_start.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/22 12:17:15 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 12:29:43 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&dinner_table->status_guardian);
-	while (i < dinner_table->rules->nb_of_philo
-		&& dinner_table->rules->max_nb_meals > 0
-		&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
-		i++;
-	pthread_mutex_unlock(&dinner_table->status_guardian);
-	return (i == dinner_table->rules->nb_of_philo);
-}
-
 static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int		i;
 	size_t	last_meal_time;
-	size_t	actual_time;
-	
+
 	if (dinner_table->rules->nb_of_philo == 1)
-		return 0;
+		return (0);
 	while (1)
 	{
 		i = 0;
@@ -44,13 +29,9 @@ static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 			pthread_mutex_lock(&dinner_table->status_guardian);
 			last_meal_time = philos[i].last_meal;
 			pthread_mutex_unlock(&dinner_table->status_guardian);
-			actual_time = get_current_time_ms();
-			if (actual_time
+			if (get_current_time_ms()
 				- last_meal_time >= (size_t)dinner_table->rules->time_to_die)
-			{
-				philo_couic(&philos[i]);
-				return (1);
-			}
+				return (philo_couic(&philos[i]));
 			i++;
 		}
 		usleep(50);
@@ -58,23 +39,14 @@ static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 	return (0);
 }
 
-bool	has_to_stop(t_dinner *dinner_table)
+static void	*lonely_philo(t_philosopher *philo)
 {
-	bool	status;
-
-	pthread_mutex_lock(&dinner_table->death_guardian);
-	status = dinner_table->stop_simulation;
-	pthread_mutex_unlock(&dinner_table->death_guardian);
-	return (status);
-}
-
-static void *lonely_philo(t_philosopher *philo) {
 	pthread_mutex_lock(&philo->dinner_table->forks[0]);
 	print_philologs("has taken the first fork", philo, false);
 	sleep_boosted(philo->dinner_table->rules->time_to_die);
 	pthread_mutex_unlock(&philo->dinner_table->forks[0]);
 	print_philologs("died", philo, true);
-	return NULL;
+	return (NULL);
 }
 
 static void	*routine(void *params)
@@ -83,7 +55,7 @@ static void	*routine(void *params)
 
 	philo = (t_philosopher *)params;
 	if (philo->dinner_table->rules->nb_of_philo == 1)
-		return lonely_philo(philo);
+		return (lonely_philo(philo));
 	while (!has_to_stop(philo->dinner_table)
 		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
 			|| philo->dinner_table->rules->max_nb_meals == 0))

@@ -6,7 +6,7 @@
 #    By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 15:31:12 by vafleith          #+#    #+#              #
-#    Updated: 2024/10/18 19:04:13 by vafleith         ###   ########.fr        #
+#    Updated: 2024/10/22 12:23:15 by vafleith         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,7 @@ NAME = philo
 
 CC = cc
 CFLAGS = -Wall -Wextra -g3
-# CFLAGS = -Wall -Wextra -gdwarf-4
-# CFLAGS += -Werror
+CFLAGS += -Werror
 
 INC = -Iinclude
 
@@ -24,7 +23,8 @@ SRC_DIR = src
 SRCS = main.c print/print.c print/error_messages.c \
 	   parse/parse.c parse/parse_utils.c parse/string_utils.c \
 	   simulate/dinner_constructor.c simulate/dinner_destructor.c \
-	   simulate/handle_time.c simulate/simulation.c simulate/actions.c
+	   simulate/handle_time.c simulate/dinner_start.c simulate/actions.c \
+	   simulate/dinner_get_status.c
 SRCS := $(addprefix $(SRC_DIR)/, $(SRCS))
 
 OBJ_DIR = build
