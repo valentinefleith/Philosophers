@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/21 21:14:08 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 11:19:01 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	print_philologs(char *log, t_philosopher *philo, bool dead)
 {
 	size_t	timestamp;
 	
-	//if (has_to_stop(philo->dinner_table) && !dead)
-	//	return;
+	if (has_to_stop(philo->dinner_table) && !dead)
+		return;
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
 	if (dead)
@@ -41,7 +41,6 @@ void	philo_miam(t_philosopher *philo)
 	t_dinner	*table;
 
 	table = philo->dinner_table;
-	//pthread_mutex_lock(&table->miam_guardian);
 	pthread_mutex_lock(&table->forks[philo->first_fork_id]);
 	print_philologs("has taken a fork", philo, false);
 	pthread_mutex_lock(&table->forks[philo->second_fork_id]);
@@ -54,7 +53,6 @@ void	philo_miam(t_philosopher *philo)
 	sleep_boosted(table->rules->time_to_eat);
 	pthread_mutex_unlock(&table->forks[philo->first_fork_id]);
 	pthread_mutex_unlock(&table->forks[philo->second_fork_id]);
-	//pthread_mutex_unlock(&table->miam_guardian);
 }
 
 void	philo_zzz(t_philosopher *philo)
@@ -67,17 +65,6 @@ void	philo_hmm(t_philosopher *philo)
 {
 	print_philologs("is thinking", philo, false);
 	sleep_boosted((philo->dinner_table->rules->time_to_die - (philo->dinner_table->rules->time_to_eat + philo->dinner_table->rules->time_to_sleep)) * 1000 / 2);
-	/*size_t time_until_death;
-	size_t time_since_last_meal;
-	pthread_mutex_lock(&philo->dinner_table->miam_guardian);
-	time_since_last_meal = get_current_time_ms() - philo->last_meal;
-	pthread_mutex_unlock(&philo->dinner_table->miam_guardian);
-	time_until_death = philo->dinner_table->rules->time_to_die - time_since_last_meal;
-	while (time_until_death > 200) {
-		time_until_death = philo->dinner_table->rules->time_to_die - time_since_last_meal;
-		sleep_boosted(50);
-	}*/
-	//usleep(50);
 }
 
 void	philo_couic(t_philosopher *philo)

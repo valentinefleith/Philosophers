@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/21 21:13:42 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:21:40 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
 	return (i == dinner_table->rules->nb_of_philo);
 }
 
-static int	check_philo_life(t_dinner *dinner_table, t_philosopher *philos)
+static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int		i;
 	size_t	last_meal_time;
@@ -116,7 +116,7 @@ int	start_dinner(t_dinner *dinner_table)
 		usleep(100);
 		i++;
 	}
-	check_philo_life(dinner_table, dinner_table->philos);
+	monitoring(dinner_table, dinner_table->philos);
 	table_destructor(dinner_table, dinner_table->rules->nb_of_philo);
 	return (0);
 }
