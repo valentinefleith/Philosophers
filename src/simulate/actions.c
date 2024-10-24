@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:59:02 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:17:16 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:20:52 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	print_philologs(char *log, t_philosopher *philo, bool dead)
 {
 	size_t	timestamp;
 
-	// if (has_to_stop(philo->dinner_table) && !dead)
-	//  	return 1;
+	if (has_to_stop(philo->dinner_table) && !dead)
+		return (1);
 	timestamp = get_current_time_ms() - philo->dinner_table->start_time;
 	pthread_mutex_lock(&philo->dinner_table->print_guardian);
 	if (has_to_stop(philo->dinner_table) && !dead)
-	 	return (pthread_mutex_unlock(&philo->dinner_table->print_guardian), 1);
+		return (pthread_mutex_unlock(&philo->dinner_table->print_guardian), 1);
 	if (dead)
 		printf("\033[0;31m");
 	else if (philo->id % 4 == 0)
@@ -35,15 +35,15 @@ int	print_philologs(char *log, t_philosopher *philo, bool dead)
 	printf("%li\t%i %s", timestamp, philo->id + 1, log);
 	printf("\e[0m\n");
 	pthread_mutex_unlock(&philo->dinner_table->print_guardian);
-	return SUCCESS;
+	return (SUCCESS);
 }
 
 void	philo_miam(t_philosopher *philo)
 {
 	t_dinner	*table;
-	
+
 	if (has_to_stop(philo->dinner_table))
-		return;
+		return ;
 	table = philo->dinner_table;
 	pthread_mutex_lock(&table->forks[philo->first_fork_id]);
 	print_philologs("has taken a fork", philo, false);
@@ -70,13 +70,14 @@ void	philo_hmm(t_philosopher *philo)
 	size_t	eat_sleep;
 	size_t	time;
 
-	eat_sleep = philo->dinner_table->rules->time_to_eat + philo->dinner_table->rules->time_to_sleep;
+	eat_sleep = philo->dinner_table->rules->time_to_eat
+		+ philo->dinner_table->rules->time_to_sleep;
 	if (eat_sleep >= (size_t)philo->dinner_table->rules->time_to_die)
 		time = 0;
 	else
 		time = (philo->dinner_table->rules->time_to_die - eat_sleep) / 2;
 	if (has_to_stop(philo->dinner_table))
-		return;
+		return ;
 	print_philologs("is thinking", philo, false);
 	sleep_boosted(time);
 }

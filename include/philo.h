@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:23:53 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:28:31 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_rules
 	int					max_nb_meals;
 }						t_rules;
 
-struct	s_dinner;
+struct					s_dinner;
 typedef pthread_mutex_t	t_mutex;
 
 typedef struct s_philosopher
