@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 18:18:30 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:20:47 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:20:44 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,5 @@ void	sleep_boosted(size_t duration_in_ms)
 
 	start = get_current_time_ms();
 	while (get_current_time_ms() - start < duration_in_ms)
-		usleep(100);
+		usleep(1000);
 }

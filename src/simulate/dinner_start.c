@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:30:28 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:44:06 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ static void	*routine(void *params)
 	philo = (t_philosopher *)params;
 	if (philo->dinner_table->rules->nb_of_philo == 1)
 		return (lonely_philo(philo));
+	if (philo->id % 2)
+		philo_hmm(philo);
+	else
+		print_philologs("is thinking", philo, false);
 	while (!has_to_stop(philo->dinner_table)
 		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
 			|| philo->dinner_table->rules->max_nb_meals == 0))
