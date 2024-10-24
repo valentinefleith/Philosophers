@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/22 12:29:43 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:14:11 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int		i;
 	size_t	last_meal_time;
+	size_t actual_time;
 
 	if (dinner_table->rules->nb_of_philo == 1)
 		return (0);
@@ -29,9 +30,13 @@ static int	monitoring(t_dinner *dinner_table, t_philosopher *philos)
 			pthread_mutex_lock(&dinner_table->status_guardian);
 			last_meal_time = philos[i].last_meal;
 			pthread_mutex_unlock(&dinner_table->status_guardian);
-			if (get_current_time_ms()
+			actual_time = get_current_time_ms();
+			if (actual_time
 				- last_meal_time >= (size_t)dinner_table->rules->time_to_die)
-				return (philo_couic(&philos[i]));
+			{
+				philo_couic(&philos[i]);
+				return print_philologs("died", &philos[i], true);
+			}
 			i++;
 		}
 		usleep(50);
@@ -60,11 +65,15 @@ static void	*routine(void *params)
 		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
 			|| philo->dinner_table->rules->max_nb_meals == 0))
 	{
-		philo_miam(philo);
 		if (!has_to_stop(philo->dinner_table))
+			philo_miam(philo);
+		if (!has_to_stop(philo->dinner_table)) 
 		{
 			philo_zzz(philo);
-			philo_hmm(philo);
+			if (!has_to_stop(philo->dinner_table))
+			{
+				philo_hmm(philo);
+			}
 		}
 	}
 	return (NULL);

@@ -26,5 +26,10 @@ void	sleep_boosted(size_t duration_in_ms)
 
 	start = get_current_time_ms();
 	while (get_current_time_ms() - start < duration_in_ms)
-		usleep(150);
+	{
+		// printf("%ld - %li = %ld < %ld\n", get_current_time_ms(), start, get_current_time_ms() - start, duration_in_ms);
+		// usleep(150);
+		//printf("coucou\n");
+		usleep(100);
+	}
 }
