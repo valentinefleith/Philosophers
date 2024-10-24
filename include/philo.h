@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:08:03 by vafleith         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:23:53 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void					philo_miam(t_philosopher *philo);
 void					philo_zzz(t_philosopher *philo);
 void					philo_hmm(t_philosopher *philo);
 int						philo_couic(t_philosopher *philo);
-int					print_philologs(char *log, t_philosopher *philo,
+int						print_philologs(char *log, t_philosopher *philo,
 							bool dead);
 
 // DESTRUCTORS
