@@ -50,6 +50,25 @@ static void	*lonely_philo(t_philosopher *philo)
 	return (NULL);
 }
 
+typedef enum e_loop_status {CONTINUE, DONE} t_loop_status;
+
+t_loop_status loop_inner(t_philosopher* philo) {
+    if (philo->dinner_table->rules->track_meals &&
+        philo->meals_eaten >= philo->dinner_table->rules->max_nb_meals)
+        return DONE;
+    if (!has_to_stop(philo->dinner_table))
+        philo_miam(philo);
+    if (!has_to_stop(philo->dinner_table))
+    {
+        philo_zzz(philo);
+        if (!has_to_stop(philo->dinner_table))
+        {
+            philo_hmm(philo);
+        }
+    }
+    return CONTINUE;
+}
+
 static void	*routine(void *params)
 {
 	t_philosopher	*philo;
@@ -61,20 +80,10 @@ static void	*routine(void *params)
 		philo_hmm(philo);
 	else
 		print_philologs("is thinking", philo, false);
-	while (!has_to_stop(philo->dinner_table)
-		&& (philo->meals_eaten != philo->dinner_table->rules->max_nb_meals
-			|| philo->dinner_table->rules->max_nb_meals == 0))
+	while (!has_to_stop(philo->dinner_table))
 	{
-		if (!has_to_stop(philo->dinner_table))
-			philo_miam(philo);
-		if (!has_to_stop(philo->dinner_table))
-		{
-			philo_zzz(philo);
-			if (!has_to_stop(philo->dinner_table))
-			{
-				philo_hmm(philo);
-			}
-		}
+        if (loop_inner(philo) == DONE)
+            break;
 	}
 	return (NULL);
 }

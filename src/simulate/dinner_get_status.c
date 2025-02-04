@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 12:20:34 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/22 12:21:07 by vafleith         ###   ########.fr       */
+/*   Updated: 2025/02/04 12:59:04 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,14 @@ bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int	i;
 
+    if (!dinner_table->rules->track_meals)
+	{
+        return false;
+	}
 	i = 0;
 	pthread_mutex_lock(&dinner_table->status_guardian);
 	while (i < dinner_table->rules->nb_of_philo
-		&& dinner_table->rules->max_nb_meals > 0
-		&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
+			&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
 		i++;
 	pthread_mutex_unlock(&dinner_table->status_guardian);
 	return (i == dinner_table->rules->nb_of_philo);

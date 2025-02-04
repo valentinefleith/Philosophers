@@ -86,7 +86,6 @@ int	philo_couic(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->dinner_table->death_guardian);
 	philo->dinner_table->stop_simulation = true;
-	philo->is_dead = true;
 	pthread_mutex_unlock(&philo->dinner_table->death_guardian);
 	return (1);
 }

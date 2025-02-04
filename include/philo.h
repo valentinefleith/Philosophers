@@ -40,6 +40,7 @@ typedef struct s_rules
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					max_nb_meals;
+    bool                track_meals;
 }						t_rules;
 
 struct					s_dinner;
@@ -52,10 +53,8 @@ typedef struct s_philosopher
 	int					first_fork_id;
 	int					second_fork_id;
 	struct s_dinner		*dinner_table;
-	bool				is_full;
 	int					meals_eaten;
 	size_t				last_meal;
-	bool				is_dead;
 }						t_philosopher;
 
 typedef struct s_dinner
@@ -64,13 +63,10 @@ typedef struct s_dinner
 	t_rules				*rules;
 	t_mutex				*forks;
 	size_t				start_time;
-	bool				someones_dead;
 	bool				stop_simulation;
-	bool				everyones_full;
 	t_mutex				death_guardian;
 	t_mutex				print_guardian;
 	t_mutex				status_guardian;
-	t_mutex				miam_guardian;
 }						t_dinner;
 
 t_rules					parse_rules(int argc, char **argv);

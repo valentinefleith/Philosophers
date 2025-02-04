@@ -14,10 +14,8 @@
 
 static void	init_state(t_philosopher *philos)
 {
-	philos->is_full = false;
 	philos->last_meal = 0;
 	philos->meals_eaten = 0;
-	philos->is_dead = false;
 }
 
 static void	init_forks_ids(t_philosopher *philos, int index, t_rules *rules)
@@ -84,9 +82,7 @@ void	set_the_table(t_rules *rules, t_dinner *table)
 		return ;
 	}
 	table->rules = rules;
-	table->someones_dead = false;
 	table->stop_simulation = false;
-	table->everyones_full = false;
 	table->forks = forks_constructor(rules);
 	if (!table->forks)
 	{
@@ -99,7 +95,6 @@ void	set_the_table(t_rules *rules, t_dinner *table)
 		printf("rip\n");
 	if (pthread_mutex_init(&table->death_guardian, NULL) != SUCCESS)
 		printf("rip\n");
-	if (pthread_mutex_init(&table->miam_guardian, NULL) != SUCCESS)
-		printf("rip\n");
+
 	return ;
 }
