@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 12:08:04 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 17:28:31 by vafleith         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:27:13 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_rules
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					max_nb_meals;
-    bool                track_meals;
+	bool				track_meals;
 }						t_rules;
 
 struct					s_dinner;

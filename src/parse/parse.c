@@ -38,10 +38,10 @@ static bool	is_overflowing(char *arg)
 static bool	respect_range(t_rules *rules)
 {
 	if (rules->track_meals && rules->max_nb_meals == 0)
-		return false;
+		return (false);
 	return (rules->nb_of_philo >= 1 && rules->nb_of_philo <= 200
-			&& rules->time_to_die > 0 && rules->time_to_eat > 0
-			&& rules->time_to_sleep > 0);
+		&& rules->time_to_die > 0 && rules->time_to_eat > 0
+		&& rules->time_to_sleep > 0);
 }
 
 t_rules	parse_rules(int argc, char **argv)
@@ -60,10 +60,11 @@ t_rules	parse_rules(int argc, char **argv)
 	rules.time_to_die = ft_atoi(argv[TIME_DIE_IDX]);
 	rules.time_to_eat = ft_atoi(argv[TIME_EAT_IDX]);
 	rules.time_to_sleep = ft_atoi(argv[TIME_SLEEP_IDX]);
-	if (argc == 6) {
-        rules.max_nb_meals = ft_atoi(argv[MAX_NB_MEALS_IDX]);
-        rules.track_meals = true;
-    }
+	if (argc == 6)
+	{
+		rules.max_nb_meals = ft_atoi(argv[MAX_NB_MEALS_IDX]);
+		rules.track_meals = true;
+	}
 	else
 		rules.track_meals = false;
 	if (!respect_range(&rules))

@@ -95,6 +95,5 @@ void	set_the_table(t_rules *rules, t_dinner *table)
 		printf("rip\n");
 	if (pthread_mutex_init(&table->death_guardian, NULL) != SUCCESS)
 		printf("rip\n");
-
 	return ;
 }

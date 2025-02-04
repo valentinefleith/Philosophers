@@ -6,7 +6,7 @@
 /*   By: vafleith <vafleith@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 23:30:28 by vafleith          #+#    #+#             */
-/*   Updated: 2024/10/24 18:44:06 by vafleith         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:24:11 by vafleith         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,28 @@ static void	*lonely_philo(t_philosopher *philo)
 	return (NULL);
 }
 
-typedef enum e_loop_status {CONTINUE, DONE} t_loop_status;
+typedef enum e_loop_status
+{
+	CONTINUE,
+	DONE
+}				t_loop_status;
 
-t_loop_status loop_inner(t_philosopher* philo) {
-    if (philo->dinner_table->rules->track_meals &&
-        philo->meals_eaten >= philo->dinner_table->rules->max_nb_meals)
-        return DONE;
-    if (!has_to_stop(philo->dinner_table))
-        philo_miam(philo);
-    if (!has_to_stop(philo->dinner_table))
-    {
-        philo_zzz(philo);
-        if (!has_to_stop(philo->dinner_table))
-        {
-            philo_hmm(philo);
-        }
-    }
-    return CONTINUE;
+t_loop_status	loop_inner(t_philosopher *philo)
+{
+	if (philo->dinner_table->rules->track_meals
+		&& philo->meals_eaten >= philo->dinner_table->rules->max_nb_meals)
+		return (DONE);
+	if (!has_to_stop(philo->dinner_table))
+		philo_miam(philo);
+	if (!has_to_stop(philo->dinner_table))
+	{
+		philo_zzz(philo);
+		if (!has_to_stop(philo->dinner_table))
+		{
+			philo_hmm(philo);
+		}
+	}
+	return (CONTINUE);
 }
 
 static void	*routine(void *params)
@@ -82,8 +87,8 @@ static void	*routine(void *params)
 		print_philologs("is thinking", philo, false);
 	while (!has_to_stop(philo->dinner_table))
 	{
-        if (loop_inner(philo) == DONE)
-            break;
+		if (loop_inner(philo) == DONE)
+			break ;
 	}
 	return (NULL);
 }

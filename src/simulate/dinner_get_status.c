@@ -16,14 +16,14 @@ bool	are_full(t_dinner *dinner_table, t_philosopher *philos)
 {
 	int	i;
 
-    if (!dinner_table->rules->track_meals)
+	if (!dinner_table->rules->track_meals)
 	{
-        return false;
+		return (false);
 	}
 	i = 0;
 	pthread_mutex_lock(&dinner_table->status_guardian);
 	while (i < dinner_table->rules->nb_of_philo
-			&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
+		&& philos[i].meals_eaten >= dinner_table->rules->max_nb_meals)
 		i++;
 	pthread_mutex_unlock(&dinner_table->status_guardian);
 	return (i == dinner_table->rules->nb_of_philo);
